@@ -7,12 +7,11 @@ import { Component } from '@angular/core';
   styleUrl: './promises.scss'
 })
 export class Promises { 
-
-  dell = {
-    brand: 'dell',
-    ram: '16gb',
-    cpu: 'i7'
-  }
+  dell =  {
+  brand: 'dell',
+  ram: '16gb',
+  cpu: 'i7'
+};
 
   hp = {
     brand: 'hp',
@@ -39,15 +38,15 @@ export class Promises {
     let buyLaptop = new Promise((resolve,reject) => {
       if(this.dellAvailble()){
         return setTimeout(()=> {
-          resolve("dell is purchased")
+          resolve(this.dell)
         }, 3000)
       } else if(this.hpAvailble()){
         return setTimeout(()=> {
-          resolve("hp is purchased")
+          resolve(this.hp)
         },3000)
       } else {
         return setTimeout(()=>{
-          reject("No laptop available in the market")
+          reject(this.notAvailable)
         },3000)
       }
     });
