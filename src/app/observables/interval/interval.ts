@@ -32,6 +32,5 @@ export class Interval implements OnInit {
       this.videosSubscription.unsubscribe()
     }
   })
-  }
-
+ }
 }
