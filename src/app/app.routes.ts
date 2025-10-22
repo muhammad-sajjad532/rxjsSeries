@@ -10,6 +10,10 @@ import { Custom } from './observables/custom/custom';
 import { Map } from './observables/map/map';
 import { Pluck } from './observables/pluck/pluck';
 import { Filter } from './observables/filter/filter';
+import { Tap } from './observables/tap/tap';
+import { Take } from './observables/take/take';
+import { Retry } from './observables/retry/retry';
+import { DebounceTime } from './observables/debounce-time/debounce-time';
 
 export const routes: Routes = [
     { path: 'promises', component: Promises },
@@ -22,7 +26,11 @@ export const routes: Routes = [
         {path: 'custom', component: Custom},
         {path: 'map', component: Map},
         {path: 'pluck', component: Pluck},
-        {path: 'filter', component: Filter}
+        {path: 'filter', component: Filter},
+        {path: 'tap', component: Tap},
+        {path: 'take', component: Take},
+        {path: 'retry', component: Retry},
+        {path: 'debounce', component: DebounceTime}
     ]},
     {path: '**', redirectTo: 'promises'}
 
