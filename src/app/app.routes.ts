@@ -17,6 +17,7 @@ import { DebounceTime } from './observables/debounce-time/debounce-time';
 import { Subject } from './observables/subject/subject';
 import { Concat } from './observables/concat/concat';
 import { Merge } from './observables/merge/merge';
+import { MergeMap } from './observables/merge-map/merge-map';
 
 export const routes: Routes = [
     { path: 'promises', component: Promises },
@@ -36,7 +37,8 @@ export const routes: Routes = [
         {path: 'debounce', component: DebounceTime},
         {path: 'subject', component: Subject},
         {path: 'concat', component: Concat},
-        {path: 'merge', component: Merge}
+        {path: 'merge', component: Merge},
+        {path: 'mergemap', component: MergeMap}
         
     ]},
     {path: '**', redirectTo: 'promises'}
