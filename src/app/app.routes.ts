@@ -14,6 +14,8 @@ import { Tap } from './observables/tap/tap';
 import { Take } from './observables/take/take';
 import { Retry } from './observables/retry/retry';
 import { DebounceTime } from './observables/debounce-time/debounce-time';
+import { Subject } from './observables/subject/subject';
+import { Concat } from './observables/concat/concat';
 
 export const routes: Routes = [
     { path: 'promises', component: Promises },
@@ -30,8 +32,9 @@ export const routes: Routes = [
         {path: 'tap', component: Tap},
         {path: 'take', component: Take},
         {path: 'retry', component: Retry},
-        {path: 'debounce', component: DebounceTime}
+        {path: 'debounce', component: DebounceTime},
+        {path: 'subject', component: Subject},
+        {path: 'concat', component: Concat}
     ]},
     {path: '**', redirectTo: 'promises'}
-
 ];
