@@ -1,1 +1,20 @@
-<p>tap works!</p>
+<div class="container mt-4">
+  <h3 class="mb-3">Tap Operator Example (Filter by Gender = Female)</h3>
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Gender</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredUsers">
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.gender }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
