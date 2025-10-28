@@ -1,1 +1,38 @@
-<p>filter works!</p>
+<div class="container mt-4">
+  <h3 class="mb-3">Filter by Name Length > 4</h3>
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Gender</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredByLength">
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.gender }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="mt-5 mb-3">Filter by Gender = Female</h3>
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Gender</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredByGender">
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.gender }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
