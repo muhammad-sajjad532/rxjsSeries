@@ -1,1 +1,46 @@
-<p>retry works!</p>
+<div class="container mt-4">
+  <h3 class="mb-3 text-center">Retry Operator Example</h3>
+
+  <div class="text-center mb-3">
+    <button
+      class="btn btn-primary"
+      (click)="fetchData()"
+      [disabled]="loading"
+    >
+      <span
+        *ngIf="loading"
+        class="spinner-border spinner-border-sm me-2"
+        role="status"
+        aria-hidden="true"
+      ></span>
+      {{ loading ? 'Loading...' : 'Fetch Data' }}
+    </button>
+  </div>
+
+  <!-- Status Message -->
+  <p class="text-center" [ngClass]="{'text-success': !loading, 'text-danger': statusMessage.includes('❌')}">
+    {{ statusMessage }}
+  </p>
+
+  <!-- Data Table -->
+  <div *ngIf="users.length > 0" class="table-responsive mt-4">
+    <table class="table table-bordered table-striped text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Username</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.username }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

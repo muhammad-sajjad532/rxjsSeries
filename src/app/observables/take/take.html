@@ -1,1 +1,43 @@
-<p>take works!</p>
+<div class="container mt-4">
+
+  <!-- take() Example -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h5>take(3) Example</h5>
+    </div>
+    <div class="card-body">
+      <p><strong>Description:</strong> Takes only the first 3 emitted values.</p>
+      <div class="alert alert-info">
+        {{ takeResult.join(', ') }}
+      </div>
+    </div>
+  </div>
+
+  <!-- takeLast() Example -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-success text-white">
+      <h5>takeLast(2) Example</h5>
+    </div>
+    <div class="card-body">
+      <p><strong>Description:</strong> Takes only the last 2 values after the observable completes.</p>
+      <div class="alert alert-success">
+        {{ takeLastResult.join(', ') }}
+      </div>
+    </div>
+  </div>
+
+  <!-- takeUntil() Example -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-warning">
+      <h5>takeUntil() Example (No Subject)</h5>
+    </div>
+    <div class="card-body">
+      <p><strong>Description:</strong> Emits values every second until 5 seconds pass (using timer).</p>
+      <div class="alert alert-warning">
+        <ul id="elContainer"></ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
