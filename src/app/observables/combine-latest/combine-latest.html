@@ -1,0 +1,244 @@
+<div class="container">
+  <div class="header">
+    <h1>combineLatest vs withLatestFrom</h1>
+    <p class="description">
+      Two powerful RxJS operators for combining multiple observables. See them in action below!
+    </p>
+  </div>
+
+  <div class="comparison-grid">
+    <!-- CombineLatest Section -->
+    <div class="operator-section combine">
+      <div class="operator-header">
+        <h2>🍕 combineLatest</h2>
+        <p class="operator-description">
+          Emits whenever <strong>ANY</strong> observable changes (after all have emitted at least once)
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <h3>Build Your Pizza Order</h3>
+        
+        <div class="selection-group">
+          <label>Pizza Size:</label>
+          <div class="button-group">
+            <button 
+              [class.selected]="selectedSize === 'Small'"
+              (click)="selectSize('Small')">
+              Small
+            </button>
+            <button 
+              [class.selected]="selectedSize === 'Medium'"
+              (click)="selectSize('Medium')">
+              Medium
+            </button>
+            <button 
+              [class.selected]="selectedSize === 'Large'"
+              (click)="selectSize('Large')">
+              Large
+            </button>
+          </div>
+        </div>
+
+        <div class="selection-group">
+          <label>Crust Type:</label>
+          <div class="button-group">
+            <button 
+              [class.selected]="selectedCrust === 'Thin'"
+              (click)="selectCrust('Thin')">
+              Thin
+            </button>
+            <button 
+              [class.selected]="selectedCrust === 'Thick'"
+              (click)="selectCrust('Thick')">
+              Thick
+            </button>
+            <button 
+              [class.selected]="selectedCrust === 'Stuffed'"
+              (click)="selectCrust('Stuffed')">
+              Stuffed
+            </button>
+          </div>
+        </div>
+
+        <div class="selection-group">
+          <label>Toppings:</label>
+          <div class="button-group">
+            <button 
+              [class.selected]="selectedToppings === 'Pepperoni'"
+              (click)="selectToppings('Pepperoni')">
+              Pepperoni
+            </button>
+            <button 
+              [class.selected]="selectedToppings === 'Veggie'"
+              (click)="selectToppings('Veggie')">
+              Veggie
+            </button>
+            <button 
+              [class.selected]="selectedToppings === 'Cheese'"
+              (click)="selectToppings('Cheese')">
+              Cheese
+            </button>
+          </div>
+        </div>
+
+        <button class="reset-btn" (click)="resetPizza()">🔄 Reset Pizza</button>
+      </div>
+
+      <div class="results-box">
+        <div class="emit-counter">
+          Total Emissions: <span>{{ combineLatestEmitCount }}</span>
+        </div>
+        
+        <div class="results-list">
+          <div class="result-item" *ngFor="let result of combineLatestResult">
+            {{ result }}
+          </div>
+          <div class="empty-state" *ngIf="combineLatestResult.length === 0">
+            👆 Select all three options to see combineLatest in action!
+          </div>
+        </div>
+      </div>
+
+      <div class="info-note">
+        <strong>📌 Notice:</strong> combineLatest emits EVERY time you change ANY selection (after all 3 are chosen)
+      </div>
+    </div>
+
+    <!-- WithLatestFrom Section -->
+    <div class="operator-section withlat">
+      <div class="operator-header">
+        <h2>📸 withLatestFrom</h2>
+        <p class="operator-description">
+          Emits ONLY when the <strong>PRIMARY</strong> observable emits (capture button)
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <h3>Camera Settings (Change Freely)</h3>
+        
+        <div class="selection-group">
+          <label>Location:</label>
+          <div class="button-group">
+            <button 
+              [class.selected]="currentLocation === 'New York'"
+              (click)="changeLocation('New York')">
+              New York
+            </button>
+            <button 
+              [class.selected]="currentLocation === 'Paris'"
+              (click)="changeLocation('Paris')">
+              Paris
+            </button>
+            <button 
+              [class.selected]="currentLocation === 'Tokyo'"
+              (click)="changeLocation('Tokyo')">
+              Tokyo
+            </button>
+          </div>
+        </div>
+
+        <div class="selection-group">
+          <label>Filter:</label>
+          <div class="button-group">
+            <button 
+              [class.selected]="currentFilter === 'Normal'"
+              (click)="changeFilter('Normal')">
+              Normal
+            </button>
+            <button 
+              [class.selected]="currentFilter === 'Vintage'"
+              (click)="changeFilter('Vintage')">
+              Vintage
+            </button>
+            <button 
+              [class.selected]="currentFilter === 'B&W'"
+              (click)="changeFilter('B&W')">
+              B&W
+            </button>
+          </div>
+        </div>
+
+        <div class="selection-group">
+          <label>Brightness: {{ currentBrightness }}%</label>
+          <input 
+            type="range" 
+            min="0" 
+            max="100" 
+            [value]="currentBrightness"
+            (input)="changeBrightness($event)"
+            class="brightness-slider">
+        </div>
+
+        <div class="primary-action">
+          <button class="capture-btn" (click)="capturePhoto()">
+            📷 CAPTURE PHOTO
+          </button>
+          <p class="helper-text">👆 This is the PRIMARY observable!</p>
+        </div>
+
+        <button class="reset-btn" (click)="resetCamera()">🔄 Reset Camera</button>
+      </div>
+
+      <div class="results-box">
+        <div class="emit-counter">
+          Photos Captured: <span>{{ photoCount }}</span>
+        </div>
+        
+        <div class="results-list">
+          <div class="photo-card" *ngFor="let photo of withLatestFromResult">
+            <div class="photo-header">📷 Photo #{{ photo.photoNumber }}</div>
+            <div class="photo-details">
+              <p><strong>Time:</strong> {{ photo.timestamp }}</p>
+              <p><strong>Location:</strong> {{ photo.location }}</p>
+              <p><strong>Filter:</strong> {{ photo.filter }}</p>
+              <p><strong>Brightness:</strong> {{ photo.brightness }}%</p>
+            </div>
+          </div>
+          <div class="empty-state" *ngIf="withLatestFromResult.length === 0">
+            👆 Click "Capture Photo" to see withLatestFrom in action!
+          </div>
+        </div>
+      </div>
+
+      <div class="info-note">
+        <strong>📌 Notice:</strong> Changing settings does NOT emit. Only clicking "Capture Photo" emits!
+      </div>
+    </div>
+  </div>
+
+  <div class="comparison-table">
+    <h3>📊 Key Differences</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>combineLatest</th>
+          <th>withLatestFrom</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>When it emits</strong></td>
+          <td>When ANY observable emits</td>
+          <td>Only when PRIMARY emits</td>
+        </tr>
+        <tr>
+          <td><strong>Initial requirement</strong></td>
+          <td>ALL must emit at least once</td>
+          <td>Only PRIMARY must emit</td>
+        </tr>
+        <tr>
+          <td><strong>Use case</strong></td>
+          <td>Form validation, real-time filters</td>
+          <td>Button click with current state</td>
+        </tr>
+        <tr>
+          <td><strong>Emission frequency</strong></td>
+          <td>High (every change)</td>
+          <td>Low (only on trigger)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

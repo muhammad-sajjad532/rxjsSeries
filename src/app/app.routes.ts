@@ -22,6 +22,8 @@ import { ConcatMap } from './observables/concat-map/concat-map';
 import { SwitchMap } from './observables/switch-map/switch-map';
 import { ExhaustMap } from './observables/exhaust-map/exhaust-map';
 import { ShareReplay } from './observables/share-replay/share-replay';
+import { CombineLatest } from './observables/combine-latest/combine-latest';
+import { ZipForkJoin } from './observables/zip-fork-join/zip-fork-join';
 
 export const routes: Routes = [
     { path: 'promises', component: Promises },
@@ -46,7 +48,9 @@ export const routes: Routes = [
         {path: 'concatmap', component: ConcatMap},
         {path: 'switchmap', component: SwitchMap},
         {path: 'exhaustmap', component: ExhaustMap},
-        {path: 'sharereplay', component: ShareReplay}
+        {path: 'sharereplay', component: ShareReplay},
+        {path: 'combinelatest', component: CombineLatest},
+        {path: 'zip-fork', component: ZipForkJoin}
         
     ]},
     {path: '**', redirectTo: 'promises'}
