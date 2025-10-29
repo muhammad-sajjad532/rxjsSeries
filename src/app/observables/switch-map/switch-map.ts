@@ -12,7 +12,7 @@ export class SwitchMap implements OnInit{
 
 
   getData(data : string){
-    return of(data + 'Video Uploaded').pipe(delay(2000))
+    return of(data + 'Video Uploaded').pipe(delay(1000))
   }
 
   constructor(private _printFunction : PrintFunction){}
