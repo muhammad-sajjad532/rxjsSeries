@@ -1,7 +1,6 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
-
 @Component({
   selector: 'app-debounce-time',
   imports: [FormsModule],
@@ -10,18 +9,20 @@ import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 })
 export class DebounceTime implements AfterViewInit {
 
- debounceResult: string = '';
+  debounceResult: string = '';
   distinctResult: string = '';
 
   // 👇 Access HTML elements using ViewChild
-  @ViewChild('debounceInput', { static: true }) debounceInput!: ElementRef;
-  @ViewChild('distinctInput', { static: true }) distinctInput!: ElementRef;
+  @ViewChild('debounceInput') debounceInput!: ElementRef;
+  @ViewChild('distinctInput') distinctInput!: ElementRef;
+
+  constructor() { }
 
   ngAfterViewInit() {
 
     /** ---------- Example 1: debounceTime ---------- **/
-    fromEvent(this.debounceInput.nativeElement, 'input').pipe(
-      map((event: any) => event.target.value),
+    fromEvent<any>(this.debounceInput.nativeElement, 'keyup').pipe(
+      map(event => event.target.value),
       debounceTime(1000)
     ).subscribe((value) => {
       console.log('Debounce:', value);
@@ -29,7 +30,7 @@ export class DebounceTime implements AfterViewInit {
     });
 
     /** ---------- Example 2: distinctUntilChanged ---------- **/
-    fromEvent(this.distinctInput.nativeElement, 'input').pipe(
+    fromEvent(this.distinctInput.nativeElement, 'keyup').pipe(
       map((event: any) => event.target.value),
       distinctUntilChanged()
     ).subscribe((value) => {

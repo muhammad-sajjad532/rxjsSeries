@@ -9,10 +9,15 @@ import { PrintFunction } from './services/print-function';
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
-  exclusive: boolean = false;
-  constructor(private _printFunction : PrintFunction){}
+export class App implements OnInit{
   protected readonly title = signal('rxjsSeries');
 
- 
+  exclusive: boolean = false;
+  constructor(private _printFunction : PrintFunction){}
+
+  ngOnInit() {
+    this._printFunction.exclusive.subscribe(res => {
+      this.exclusive = res;
+    });
+  }
 }

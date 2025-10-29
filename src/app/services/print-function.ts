@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Subject } from '../observables/subject/subject';
+import { Subject } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class PrintFunction {
 
-  exclusive = new Subject();
+  exclusive = new Subject<boolean>();
+
   print(val:any, containerId:any){
   let el = document.createElement('li');
   el.innerText = val;
