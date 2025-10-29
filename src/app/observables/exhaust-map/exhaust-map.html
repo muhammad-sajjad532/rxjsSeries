@@ -1,13 +1,56 @@
-<div class="container mt-5 text-center">
-  <h2 class="mb-4 text-primary">exhaustMap Example (Login Simulation)</h2>
+<div class="container">
+  <div class="header">
+    <h1>ExhaustMap Operator Demo</h1>
+    <p class="description">
+      Click the Save button multiple times rapidly. ExhaustMap will ignore clicks while a request is in progress.
+    </p>
+  </div>
 
-  <div class="card p-4 shadow-lg mx-auto" style="max-width: 400px;">
-    <button class="btn btn-primary w-100" (click)="onLoginClick()">
-      {{ isLoading ? 'Logging in...' : 'Login' }}
-    </button>
+  <div class="content">
+    <div class="action-section">
+      <button 
+        class="save-btn" 
+        (click)="onSaveClick()"
+        [disabled]="isLoading">
+        <span *ngIf="!isLoading">💾 Save Data</span>
+        <span *ngIf="isLoading">⏳ Saving...</span>
+      </button>
+      
+      <button class="reset-btn" (click)="reset()">
+        🔄 Reset
+      </button>
 
-    <div class="mt-3" *ngIf="message">
-      <div class="alert alert-info">{{ message }}</div>
+      <div class="status" *ngIf="lastSavedTime">
+        <span class="status-icon">✅</span>
+        Last saved at: {{ lastSavedTime }}
+      </div>
+    </div>
+
+    <div class="stats-section">
+      <div class="stat-box total">
+        <div class="stat-label">Total Button Clicks</div>
+        <div class="stat-value">{{ totalClicks }}</div>
+      </div>
+
+      <div class="stat-box requests">
+        <div class="stat-label">Actual API Requests</div>
+        <div class="stat-value">{{ actualRequests }}</div>
+      </div>
+
+      <div class="stat-box ignored">
+        <div class="stat-label">Ignored Clicks</div>
+        <div class="stat-value">{{ ignoredClicks }}</div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h3>📚 How ExhaustMap Works:</h3>
+      <ul>
+        <li>When you click Save, it triggers a 2-second API call</li>
+        <li>Any clicks during those 2 seconds are <strong>ignored</strong></li>
+        <li>Only after the request completes can you trigger another one</li>
+        <li>Perfect for preventing duplicate form submissions!</li>
+      </ul>
     </div>
   </div>
 </div>

@@ -1,0 +1,155 @@
+<div class="container">
+  <div class="header">
+    <h1>ShareReplay Operator Demo</h1>
+    <p class="description">
+      Click "Subscribe" buttons to see the difference. Without shareReplay, each subscription makes a new API call. 
+      With shareReplay, all subscriptions share the same API result!
+    </p>
+  </div>
+
+  <button class="reset-btn" (click)="reset()">🔄 Reset Everything</button>
+
+  <div class="comparison-grid">
+    <!-- WITHOUT shareReplay -->
+    <div class="comparison-box without">
+      <h2>❌ WITHOUT shareReplay</h2>
+      
+      <div class="action-area">
+        <button 
+          class="subscribe-btn without-btn" 
+          (click)="subscribeWithout()"
+          [disabled]="loadingWithout || subscriptionsWithout >= 3">
+          <span *ngIf="!loadingWithout">📡 Subscribe to Observable</span>
+          <span *ngIf="loadingWithout">⏳ Loading...</span>
+        </button>
+        
+        <div class="counter-box danger">
+          <div class="counter-label">API Calls Made</div>
+          <div class="counter-value">{{ apiCallCountWithout }}</div>
+        </div>
+        
+        <div class="counter-box info">
+          <div class="counter-label">Subscriptions</div>
+          <div class="counter-value">{{ subscriptionsWithout }}</div>
+        </div>
+      </div>
+
+      <div class="data-cards">
+        <div class="data-card" [class.active]="dataWithout1">
+          <div class="card-header">Subscription #1</div>
+          <div class="card-body" *ngIf="dataWithout1">
+            <p><strong>ID:</strong> {{ dataWithout1.id }}</p>
+            <p><strong>Name:</strong> {{ dataWithout1.name }}</p>
+            <p><strong>Email:</strong> {{ dataWithout1.email }}</p>
+            <p><strong>Role:</strong> {{ dataWithout1.role }}</p>
+          </div>
+          <div class="card-body empty" *ngIf="!dataWithout1">
+            No data yet
+          </div>
+        </div>
+
+        <div class="data-card" [class.active]="dataWithout2">
+          <div class="card-header">Subscription #2</div>
+          <div class="card-body" *ngIf="dataWithout2">
+            <p><strong>ID:</strong> {{ dataWithout2.id }}</p>
+            <p><strong>Name:</strong> {{ dataWithout2.name }}</p>
+            <p><strong>Email:</strong> {{ dataWithout2.email }}</p>
+            <p><strong>Role:</strong> {{ dataWithout2.role }}</p>
+          </div>
+          <div class="card-body empty" *ngIf="!dataWithout2">
+            No data yet
+          </div>
+        </div>
+
+        <div class="data-card" [class.active]="dataWithout3">
+          <div class="card-header">Subscription #3</div>
+          <div class="card-body" *ngIf="dataWithout3">
+            <p><strong>ID:</strong> {{ dataWithout3.id }}</p>
+            <p><strong>Name:</strong> {{ dataWithout3.name }}</p>
+            <p><strong>Email:</strong> {{ dataWithout3.email }}</p>
+            <p><strong>Role:</strong> {{ dataWithout3.role }}</p>
+          </div>
+          <div class="card-body empty" *ngIf="!dataWithout3">
+            No data yet
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WITH shareReplay -->
+    <div class="comparison-box with">
+      <h2>✅ WITH shareReplay</h2>
+      
+      <div class="action-area">
+        <button 
+          class="subscribe-btn with-btn" 
+          (click)="subscribeWith()"
+          [disabled]="loadingWith || subscriptionsWith >= 3">
+          <span *ngIf="!loadingWith">📡 Subscribe to Observable</span>
+          <span *ngIf="loadingWith">⏳ Loading...</span>
+        </button>
+        
+        <div class="counter-box success">
+          <div class="counter-label">API Calls Made</div>
+          <div class="counter-value">{{ apiCallCountWith }}</div>
+        </div>
+        
+        <div class="counter-box info">
+          <div class="counter-label">Subscriptions</div>
+          <div class="counter-value">{{ subscriptionsWith }}</div>
+        </div>
+      </div>
+
+      <div class="data-cards">
+        <div class="data-card" [class.active]="dataWith1">
+          <div class="card-header">Subscription #1</div>
+          <div class="card-body" *ngIf="dataWith1">
+            <p><strong>ID:</strong> {{ dataWith1.id }}</p>
+            <p><strong>Name:</strong> {{ dataWith1.name }}</p>
+            <p><strong>Email:</strong> {{ dataWith1.email }}</p>
+            <p><strong>Role:</strong> {{ dataWith1.role }}</p>
+          </div>
+          <div class="card-body empty" *ngIf="!dataWith1">
+            No data yet
+          </div>
+        </div>
+
+        <div class="data-card" [class.active]="dataWith2">
+          <div class="card-header">Subscription #2</div>
+          <div class="card-body" *ngIf="dataWith2">
+            <p><strong>ID:</strong> {{ dataWith2.id }}</p>
+            <p><strong>Name:</strong> {{ dataWith2.name }}</p>
+            <p><strong>Email:</strong> {{ dataWith2.email }}</p>
+            <p><strong>Role:</strong> {{ dataWith2.role }}</p>
+          </div>
+          <div class="card-body empty" *ngIf="!dataWith2">
+            No data yet
+          </div>
+        </div>
+
+        <div class="data-card" [class.active]="dataWith3">
+          <div class="card-header">Subscription #3</div>
+          <div class="card-body" *ngIf="dataWith3">
+            <p><strong>ID:</strong> {{ dataWith3.id }}</p>
+            <p><strong>Name:</strong> {{ dataWith3.name }}</p>
+            <p><strong>Email:</strong> {{ dataWith3.email }}</p>
+            <p><strong>Role:</strong> {{ dataWith3.role }}</p>
+          </div>
+          <div class="card-body empty" *ngIf="!dataWith3">
+            No data yet
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <h3>📚 How ShareReplay Works:</h3>
+    <ul>
+      <li><strong>WITHOUT shareReplay:</strong> Each subscription triggers a NEW API call. Notice different IDs for each subscription!</li>
+      <li><strong>WITH shareReplay:</strong> The first subscription triggers the API call, then ALL subsequent subscriptions get the SAME cached result. Notice identical IDs!</li>
+      <li><strong>shareReplay(1)</strong> means: cache and replay the last 1 emitted value to new subscribers</li>
+      <li><strong>Real Use Case:</strong> Perfect for sharing expensive API calls (user profile, config data) across multiple components without re-fetching!</li>
+    </ul>
+  </div>
+</div>

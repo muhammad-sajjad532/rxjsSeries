@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { delay, exhaustMap, of, tap } from 'rxjs';
+import { delay, exhaustMap, of, Subject, finalize } from 'rxjs';
 
 @Component({
   selector: 'app-exhaust-map',
@@ -9,31 +9,64 @@ import { delay, exhaustMap, of, tap } from 'rxjs';
   styleUrl: './exhaust-map.scss'
 })
 export class ExhaustMap {
+  saveClick$ = new Subject<void>();
+  
+  totalClicks = 0;
+  actualRequests = 0;
+  ignoredClicks = 0;
   isLoading = false;
-  message = '';
-
-  // Fake API call simulation (takes 3 seconds)
-  fakeLoginApi() {
-    return of('✅ Login Successful!').pipe(delay(3000));
+  lastSavedTime = '';
+  
+  constructor() {
+    this.setupExhaustMap();
   }
-
-  onLoginClick() {
-    // Convert single click to observable
-    of(null)
-      .pipe(
-        // exhaustMap ensures only one login runs at a time
-        exhaustMap(() => {
-          this.isLoading = true;
-          this.message = '';
-          return this.fakeLoginApi().pipe(
-            tap(() => {
-              this.isLoading = false;
-              this.message = '✅ Login Successful!';
-            })
-          );
-        })
-      )
-      .subscribe();
+  
+  setupExhaustMap() {
+    this.saveClick$.pipe(
+      exhaustMap(() => {
+        this.isLoading = true;
+        this.actualRequests++;
+        return this.mockApiCall().pipe(
+          finalize(() => {
+            this.isLoading = false;
+          })
+        );
+      })
+    ).subscribe({
+      next: (response) => {
+        this.lastSavedTime = new Date().toLocaleTimeString();
+        console.log('Save successful:', response);
+      },
+      error: (error) => {
+        console.error('Save failed:', error);
+      }
+    });
+  }
+  
+  mockApiCall() {
+    // Simulates a 2-second API call
+    return of({ success: true, message: 'Data saved successfully' }).pipe(
+      delay(2000)
+    );
+  }
+  
+  onSaveClick() {
+    this.totalClicks++;
+    
+    if (this.isLoading) {
+      this.ignoredClicks++;
+    } else {
+      this.isLoading = true;
+    }
+    
+    this.saveClick$.next();
+  }
+  
+  reset() {
+    this.totalClicks = 0;
+    this.actualRequests = 0;
+    this.ignoredClicks = 0;
+    this.lastSavedTime = '';
   }
 
 }

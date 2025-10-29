@@ -21,6 +21,7 @@ import { MergeMap } from './observables/merge-map/merge-map';
 import { ConcatMap } from './observables/concat-map/concat-map';
 import { SwitchMap } from './observables/switch-map/switch-map';
 import { ExhaustMap } from './observables/exhaust-map/exhaust-map';
+import { ShareReplay } from './observables/share-replay/share-replay';
 
 export const routes: Routes = [
     { path: 'promises', component: Promises },
@@ -45,6 +46,7 @@ export const routes: Routes = [
         {path: 'concatmap', component: ConcatMap},
         {path: 'switchmap', component: SwitchMap},
         {path: 'exhaustmap', component: ExhaustMap},
+        {path: 'sharereplay', component: ShareReplay}
         
     ]},
     {path: '**', redirectTo: 'promises'}
