@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Observable, of, throwError } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 
 @Injectable({
@@ -15,6 +16,18 @@ export class PrintFunction {
 
   document.getElementById(containerId)!.appendChild(el)
  }
+
+ getData(): Observable<string> {
+    // Simulate random failure
+    const random = Math.random();
+    if ( random < 0.5 ) {
+      // Simulate successful response after a delay
+      return of('Hello, World!').pipe(delay(1000));
+    } else {
+      // Simulate an error after a delay
+      return throwError('Failed to fetch data!').pipe(delay(1000));
+    }
+  }
 }
 
 
